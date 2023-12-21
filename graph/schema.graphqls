@@ -1,0 +1,45 @@
+# Abaixo, temos os tipos que serão suportados pelo schema.
+
+type Category {
+  id: ID!
+  name: String!
+  description: String
+  courses: [Course!]! # O "!" representa os dados que são obrigatórios. O "[Course!]" representa uma lista, assim, uma
+                      # categoria terá vários cursos.
+}
+
+type Course {
+  id: ID!
+  name: String!
+  description: String
+  category: Category!
+}
+
+# Os inputs são utilizados para criarmos entradas de dados. Eles serão utilizados pelas
+# mutations
+
+input NewCategory {
+  name: String!
+  description: String
+}
+
+input NewCourse {
+  name: String!
+  description: String
+  categoryId: ID!
+}
+
+# A query são todos os tipos de consulta que vamos querer.
+type Query {
+  categories: [Category!]!
+  courses: [Course!]!
+}
+
+# Uma mutation é quando vamos fazer uma alteração em um modelo. Abaixo, temos duas
+# mutations, uma para criar uma categoria, que receberá um input de categoria, e uma
+# para criar um curso, que receberá o input "NewCourse".
+
+type Mutation {
+  createCategory(input: NewCategory!): Category!
+  createCourse(input: NewCourse!): Course!
+}
